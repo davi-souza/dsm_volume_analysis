@@ -6,4 +6,6 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD gunicorn --workers=2 --timeout=1800 --bind=0.0.0.0 wsgi:app
+ENV PORT=443
+
+CMD gunicorn --workers=2 --timeout=1800 --bind=0.0.0.0:$PORT wsgi:app
