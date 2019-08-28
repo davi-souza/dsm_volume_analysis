@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+    analysis:
+        image: davisouza/freecad_base:ubuntu.16
+        build:
+            context: .
+            dockerfile: Dockerfile.ubuntu.16
+        container_name: analysis
+        working_dir: /app/mech4u
+        command: bash run.sh
+        environment:
+            PORT: 8001
+        ports:
+            - 8001:8001
+        volumes:
+            - ./:/app/mech4u/:consistent
+
+    heroku:
+        image: ubuntu:16.04
+        container_name: heroku
+        working_dir: /app/mech4u
+        volumes:
+            - ./:/app/mech4u/:consistent
+
+networks:
+    default:
+        external:
+            name: mech4u_network
+

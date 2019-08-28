@@ -1,0 +1,5 @@
+build:
+  docker:
+    analysis: Dockerfile
+run:
+  analysis: bash run.sh
