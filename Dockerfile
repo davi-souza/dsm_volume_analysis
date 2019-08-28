@@ -6,4 +6,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD bash run.sh
+CMD gunicorn --workers=2 --timeout=1800 --bind=0.0.0.0 wsgi:app
