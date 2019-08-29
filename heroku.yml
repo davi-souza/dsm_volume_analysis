@@ -1,7 +1,7 @@
 build:
-  config:
-    PORT: 443
-  docker:
-    analysis: Dockerfile
+    config:
+        PORT: 443
+    docker:
+        analysis: Dockerfile
 run:
-  analysis: bash run.sh
+     analysis: gunicorn --workers=2 --timeout=1800 --bind=0.0.0.0:$PORT wsgi:app

@@ -17,7 +17,7 @@ services:
             - ./:/app/mech4u/:consistent
 
     heroku:
-        image: ubuntu:16.04
+        image: node:10-alpine
         container_name: heroku
         working_dir: /app/mech4u
         volumes:
