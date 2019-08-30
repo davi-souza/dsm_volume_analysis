@@ -4,10 +4,21 @@ from werkzeug.utils import secure_filename
 from src.libs.responses import ErrorCode, error_response, json_response
 from src.services.object import Object
 
+APIKEY = os.getenv('API_KEY')
+
 analysis = Blueprint('analysis', __name__)
 
 @analysis.route('/volume', methods=['POST'])
 def volume_analysis():
+    api_key = request.headers.get('X-API-Key')
+
+    if not api_key or api_key != APIKEY:
+        return error_response(
+            code=ErrorCode.UNAUTHORIZED,
+            status=401,
+            msg='Unauthorized. Wrong API Key'
+        )
+
     uploaded_file = request.json.get('file')
 
     if not uploaded_file:

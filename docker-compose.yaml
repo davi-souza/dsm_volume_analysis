@@ -17,7 +17,10 @@ services:
             - ./:/app/mech4u/:consistent
 
     heroku:
-        image: node:10-alpine
+        image: davisouza/node:heroku
+        build:
+            context: .
+            dockerfile: Dockerfile.heroku
         container_name: heroku
         working_dir: /app/mech4u
         volumes:

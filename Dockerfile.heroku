@@ -1,0 +1,8 @@
+FROM node:10-alpine
+
+RUN yarn global add heroku && \
+	apk add git && \
+	git config --global user.name "Davi Souza" && \
+	git config --global user.email "ddas.souza@gmail.com"
+
+RUN echo "Run 'heroku login'"
