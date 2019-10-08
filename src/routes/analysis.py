@@ -14,32 +14,28 @@ def volume_analysis():
 
     if not api_key or api_key != APIKEY:
         return error_response(
-            code=ErrorCode.UNAUTHORIZED,
             status=401,
-            msg='Unauthorized. Wrong API Key'
+            msg='Não autorizado'
         )
 
     uploaded_file = request.json.get('file')
 
     if not uploaded_file:
         return error_response(
-            code=ErrorCode.UPLOADED_FILE,
             status=400,
-            msg='File not found'
+            msg='Arquivo não encontrado'
         )
 
     filename = uploaded_file.get('filename')
 
     if not filename:
         return error_response(
-            code=ErrorCode.UPLOADED_FILE,
             status=400,
             msg='Arquivo com nome vazio'
         )
 
     if not uploaded_file.get('buffer') or not uploaded_file.get('buffer').get('data'):
         return error_response(
-            code=ErrorCode.UPLOADED_FILE,
             status=400,
             msg='Arquivo vazio'
         )
@@ -55,18 +51,13 @@ def volume_analysis():
 
         obj = Object(path_to_file)
 
-        payload = {
-            'volume': obj.volume(),
-            'bb_volume': obj.boundbox_volume(),
-            'raw_material_volume': obj.raw_material_volume(),
-        }
+        data = obj.get_all_info()
 
         os.remove(path_to_file)
 
-        return json_response(200, payload)
+        return json_response(200, data)
 
     except Exception as e:
         print(e)
 
         return error_response()
-
