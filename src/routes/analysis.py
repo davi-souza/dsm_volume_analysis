@@ -18,16 +18,15 @@ def volume_analysis():
             msg='Não autorizado'
         )
 
-    print(request.files)
-    uploaded_file = request.files.get('file')
-
-    if not uploaded_file:
+    if 'file' not in request.files:
         return error_response(
             status=400,
             msg='Arquivo não encontrado'
         )
 
-    filename = uploaded_file.get('filename')
+    uploaded_file = request.files['file']
+
+    filename = uploaded_file.filename
 
     if not filename:
         return error_response(
@@ -35,26 +34,18 @@ def volume_analysis():
             msg='Arquivo com nome vazio'
         )
 
-    if not uploaded_file.get('buffer') or not uploaded_file.get('buffer').get('data'):
-        return error_response(
-            status=400,
-            msg='Arquivo vazio'
-        )
-
     try:
         filename = secure_filename(filename)
 
-        bytes_list = uploaded_file.get('buffer').get('data')
+        filepath = os.path.join('/tmp', filename)
 
-        path_to_file = os.path.join('/tmp', filename)
+        uploaded_file.save(filepath)
 
-        open(path_to_file, 'wb').write(bytes(bytes_list))
-
-        obj = Object(path_to_file)
+        obj = Object(filepath)
 
         data = obj.get_all_info()
 
-        os.remove(path_to_file)
+        os.remove(filepath)
 
         return json_response(200, data)
 

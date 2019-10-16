@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-    analysis:
+    volume_service:
         image: davisouza/freecad_base:ubuntu.16
         #build:
         #    context: .
         #    dockerfile: Dockerfile.ubuntu.16
-        container_name: analysis
+        container_name: volume_service
         working_dir: /app/mech4u
         command: bash run.sh
         env_file:
