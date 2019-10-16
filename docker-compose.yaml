@@ -9,6 +9,8 @@ services:
         container_name: analysis
         working_dir: /app/mech4u
         command: bash run.sh
+        env_file:
+            - ./.env
         environment:
             PORT: 8001
         ports:

@@ -18,7 +18,8 @@ def volume_analysis():
             msg='Não autorizado'
         )
 
-    uploaded_file = request.json.get('file')
+    print(request.files)
+    uploaded_file = request.files.get('file')
 
     if not uploaded_file:
         return error_response(

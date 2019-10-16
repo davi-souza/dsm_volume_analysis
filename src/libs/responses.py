@@ -14,8 +14,7 @@ def error_response(status=500, msg='Ocorreu um erro'):
     @param {string}     msg message to pass to the user
     @return {object}    flask response object
     """
-    if not isinstance(code, ErrorCode):
-        code = ErrorCode.INTERNALERROR
+    print('[ERROR]', msg, status)
 
     payload = {
         'data': None,
@@ -31,8 +30,6 @@ def error_response(status=500, msg='Ocorreu um erro'):
     headers = {
         'Content-Type': 'application/json',
     }
-
-    print(payload)
 
     return Response(
         response=json.dumps(payload),
